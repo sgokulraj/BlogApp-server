@@ -49,7 +49,7 @@ app.post("/register", async (req, res) => {
       password: bcrypt.hashSync(password, salt),
       email: email.toLowerCase(),
     });
-    res.status(201).json(userDetails);
+    res.status(201).json("ok");
   } catch (err) {
     res.status(400).json(err);
   }
