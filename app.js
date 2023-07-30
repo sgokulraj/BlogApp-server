@@ -9,16 +9,21 @@ const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const fs = require("fs");
 const bodyParser = require("body-parser");
+const helmet = require("helmet")
 
-const app = express();
 dotenv.config();
 const PORT = process.env.PORT;
 const CONNECTION_URL = process.env.CONNECTION_URL;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const salt = bcrypt.genSaltSync(10);
 
+
+const app = express();
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(helmet());
+app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 // app.use(express.urlencoded({ extended: false }));
 app.use(cors());
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
